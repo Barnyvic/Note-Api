@@ -13,6 +13,7 @@ class App {
     this.routes();
     this.initializeErrorhandler();
     this.catchRouteNotFoundHandler();
+    this.rootRoute()
   }
 
   middlewares() {
@@ -32,6 +33,12 @@ class App {
     this.server.use("*", (req: Request, res: Response) => {
       return res.status(404).json({ message: "route not found" });
     });
+  }
+
+  rootRoute() {
+     this.server.get("/", (req: Request, res: Response) => {
+       return res.status(200).json({ message: "Welcome to Note API" });
+     }); 
   }
 }
 
