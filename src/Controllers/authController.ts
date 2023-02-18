@@ -1,15 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import User from "../model/userModel"
+import User from "../model/userModel";
 import { ErrorException } from "../Error-handler/error.exceptions";
 import { ErrorCode } from "../Error-handler/error.code";
 import { comparePassword, hashPassword } from "../utils/hashPassword";
 import { successResponse } from "../utils/response";
 import { generateToken } from "../utils/generateToken";
 
-
-
-
-export const createUser = async (req: Request, res: Response, next: NextFunction) => {
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { firstName, lastName, email, password, phone, confirmPassword } =
       req.body;
@@ -29,28 +30,29 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     }
     //   confirming password
     if (password !== confirmPassword) {
-     return next(
-       new ErrorException(ErrorCode.AsyncError, "Password must be provided")
-     );
+      return next(
+        new ErrorException(ErrorCode.AsyncError, "Password must be provided")
+      );
     }
 
     const emialExist = await User.findOne({ email });
     if (emialExist)
-       return next(
+      return next(
         new ErrorException(
           ErrorCode.CONFLIT,
           "email already in use by another user"
-        ))
+        )
+      );
 
     const phoneExist = await User.findOne({ phone });
 
     if (phoneExist)
-       return next(
-         new ErrorException(
-           ErrorCode.CONFLIT,
-           "Phone Number already in use by another user"
-         )
-       );
+      return next(
+        new ErrorException(
+          ErrorCode.CONFLIT,
+          "Phone Number already in use by another user"
+        )
+      );
 
     const hash = await hashPassword(password);
 
@@ -63,7 +65,6 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
       password: hash,
     });
 
-
     return successResponse(
       res,
       201,
@@ -75,8 +76,11 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-
-export const login = async (req: Request, res: Response , next:NextFunction) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     if (!email || !password)
@@ -84,15 +88,19 @@ export const login = async (req: Request, res: Response , next:NextFunction) => 
         new ErrorException(ErrorCode.VALIDATE_ERROR, "Please Fill empty fields")
       );
     const user = await User.findOne({ email });
-    if (!user) return next(
+    if (!user)
+      return next(
         new ErrorException(ErrorCode.NotFound, "User not found pls register")
       );
     const isPassword = await comparePassword(password, user.password);
-    if (!isPassword) return next(new ErrorException(ErrorCode.CONFLIT, "incorrect password"));
+    if (!isPassword)
+      return next(new ErrorException(ErrorCode.CONFLIT, "incorrect password"));
+
     const token = await generateToken({
-      id: user.id,
+      id: user._id,
       email: user.email,
     });
+
     return successResponse(res, 200, "user logged in successfully", {
       user,
       token,

@@ -13,7 +13,7 @@ export interface IUser {
 }
 
 export interface INote{
-    userId:IUser;
+    user:IUser;
     Title:string;
     Description:string;
     Body:string;

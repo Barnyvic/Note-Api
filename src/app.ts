@@ -1,7 +1,7 @@
-
-import express, { Request, Response} from "express";
+import express, { Request, Response } from "express";
 import errorMiddleware from "./middleware/errorMiddleware";
-
+import AuthRouter from "./routes/authRoute";
+import NoteRouter from "./routes/noteRoute";
 
 class App {
   public server;
@@ -19,7 +19,10 @@ class App {
     this.server.use(express.json());
   }
 
-  routes() {}
+  routes() {
+    this.server.use("/api/v1/auth", AuthRouter);
+    this.server.use("/api/v1/note", NoteRouter);
+  }
 
   private initializeErrorhandler() {
     this.server.use(errorMiddleware);
