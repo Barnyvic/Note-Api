@@ -29,16 +29,16 @@ class App {
     this.server.use(errorMiddleware);
   }
 
-  catchRouteNotFoundHandler() {
-    this.server.use("*", (req: Request, res: Response) => {
-      return res.status(404).json({ message: "route not found" });
-    });
-  }
-
   rootRoute() {
      this.server.get("/", (req: Request, res: Response) => {
        return res.status(200).json({ message: "Welcome to Note API" });
      }); 
+  }
+
+  catchRouteNotFoundHandler() {
+    this.server.use("*", (req: Request, res: Response) => {
+      return res.status(404).json({ message: "route not found" });
+    });
   }
 }
 
