@@ -2,7 +2,7 @@
   "name": "Note-Api",
   "version": "1.0.0",
   "author": "Barny Victor",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
