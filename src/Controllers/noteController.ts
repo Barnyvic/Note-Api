@@ -113,7 +113,6 @@ export const deleteNote = async (
   try {
     const { _id } = req.user;
     const { noteId } = req.params;
-    console.log(noteId);
     const note = await Note.findById(noteId);
 
 
