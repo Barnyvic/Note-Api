@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsc --project ./",
     "start:dev": "nodemon src/server.ts",
-    "start": "node dist/server.js"
+    "start:prod": "node dist/server.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
