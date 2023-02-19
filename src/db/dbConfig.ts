@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+mongoose.set("strictQuery", true);
+
 export const dbConnection = async () => {
   const mongodbURL = process.env.MONGODB_URL || "mongodb://localhost:27017";
   try {
