@@ -31,7 +31,7 @@ export const createUser = async (
     //   confirming password
     if (password !== confirmPassword) {
       return next(
-        new ErrorException(ErrorCode.AsyncError, "Password must be provided")
+        new ErrorException(ErrorCode.CONFLIT, "Password must be provided")
       );
     }
 

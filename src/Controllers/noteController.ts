@@ -21,15 +21,11 @@ export const createNote = async (
 
     const { _id } = req.user;
     const user = User.findOne({ _id: _id });
-    if (!user)
-      return next(
-        new ErrorException(ErrorCode.Unauthenticated, "Pls Login or Signup")
-      );
 
     const Newnote = await Note.create({
       Title,
       Body,
-      user: _id,
+      user: (await user)._id,
       Description,
     });
 
