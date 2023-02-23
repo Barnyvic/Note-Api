@@ -16,7 +16,7 @@ read, update and delete notes.
 
 ---
 
-<p> <b>Sign-up and Login Endpoints</b></p>
+<p> <b>Signup and Login Endpoint</b></p>
 
 - Sign-up : <b>/api/v1/auth/signup</b>,
 
